@@ -1,5 +1,6 @@
 package org.gamerex.buildthelines2;
 
+import org.gamerex.buildthelines2.states.ActionResolver;
 import org.gamerex.buildthelines2.states.GSM;
 import org.gamerex.buildthelines2.states.MainMenu;
 
@@ -19,6 +20,10 @@ public class BTL2 extends ApplicationAdapter {
 	private SpriteBatch sb;
 	private OrthographicCamera cam;	
 	
+	public BTL2(ActionResolver ar) {
+		
+	}
+
 	public void create() {
 		Gdx.gl.glClearColor(0f, 0.75f, 1f, 1);
 		gsm = new GSM();
