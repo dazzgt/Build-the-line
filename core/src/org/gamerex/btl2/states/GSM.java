@@ -11,10 +11,10 @@ public class GSM {
 	public int scH;
 	private Stack<State> states;
 	private State bg;
-	ActionResolver ar;
+	ActionResolver actionResolver;
 	
-	public GSM(ActionResolver ar){
-		this.ar = ar;
+	public GSM(ActionResolver actionResolver){
+		this.actionResolver = actionResolver;
 		states = new Stack<State>();
 		scW = Gdx.graphics.getWidth();
 		scH = Gdx.graphics.getHeight();

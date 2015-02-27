@@ -1,5 +1,66 @@
 package org.gamerex.btl2.android;
 
+import org.gamerex.btl2.BTL2;
+import org.gamerex.btl2.states.ActionResolver;
+
+import android.os.Bundle;
+
+import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
+public class AndroidLauncher extends AndroidApplication implements ActionResolver {
+
+	//ADS
+	private static final String AD_UNIT_ID_INTERSTITIAL = "ca-app-pub-6049553525908152/3441613621";
+	private InterstitialAd interstitialAd;
+	
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
+		cfg.useAccelerometer = false;
+		cfg.useCompass = false;
+		interstitialAd = new InterstitialAd(this);
+		interstitialAd.setAdUnitId(AD_UNIT_ID_INTERSTITIAL);
+		adsInit();
+		initialize(new BTL2(this), cfg);
+	}
+
+	private void adsInit() {
+		AdRequest interstitialRequest = new AdRequest.Builder().build();
+		interstitialAd.loadAd(interstitialRequest);
+		interstitialAd.setAdListener(new AdListener() {
+			public void onAdLoaded() {}
+			public void onAdClosed() {
+				AdRequest interstitialRequest = new AdRequest.Builder().build();
+				interstitialAd.loadAd(interstitialRequest);
+			}
+		});
+		
+	}
+
+	public void showInterstital() {
+		try {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					if (interstitialAd.isLoaded()) {
+						interstitialAd.show();
+					}
+					AdRequest interstitialRequest = new AdRequest.Builder().build();
+					interstitialAd.loadAd(interstitialRequest);
+				}
+			});
+		} catch (Exception e) {
+		}
+	}
+	public void setTrackerScreenName(String path) {}
+
+}
+
+/*package org.gamerex.btl2.android;
+
 import java.util.HashMap;
 
 import org.gamerex.btl2.BTL2;
@@ -46,7 +107,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	       mService = IInAppBillingService.Stub.asInterface(service);
 	   }
 	};
-	
+
 	//ADS
 	private static final String AD_UNIT_ID_INTERSTITIAL = "ca-app-pub-6049553525908152/3441613621";
 	protected View gameView;
@@ -60,7 +121,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a
 							// company.
 	}
- 
+
 	HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
 	private AndroidLauncher myApplication;
@@ -68,12 +129,12 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	private Tracker tracker;
 
 	private Tracker globalTracker;
- 
+
 	synchronized Tracker getTracker(TrackerName trackerId) {
 		if (!mTrackers.containsKey(trackerId)) {
- 
+
 			GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
- 
+
 			Tracker t = (trackerId == TrackerName.APP_TRACKER) ? analytics.newTracker(R.xml.app_tracker)
 					: (trackerId == TrackerName.GLOBAL_TRACKER) ? analytics.newTracker(R.xml.global_tracker) 
 					: analytics.newTracker(R.xml.ecommerce_tracker);
@@ -120,11 +181,11 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 				//Toast.makeText(getApplicationContext(), "Closed Interstitial", Toast.LENGTH_SHORT).show();
 			}
 		});
-		
+
 		Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
 		  serviceIntent.setPackage("com.android.vending");
 		  bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
-		  
+
 		  myApplication = (AndroidLauncher) Gdx.app;
 		  tracker = myApplication.getTracker(TrackerName.APP_TRACKER);
 		  globalTracker = myApplication.getTracker(TrackerName.GLOBAL_TRACKER);
@@ -140,7 +201,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		return gameView;
 	}
 
-	
+
 	@Override
 	public void showInterstital() {
 		try {
@@ -162,7 +223,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		super.onStart();
 		GoogleAnalytics.getInstance(this).reportActivityStart(this);
 	}
- 
+
 	@Override
 	public void onStop() {
 		super.onStop();
@@ -174,7 +235,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		//tracker.setScreenName(path);
 		//tracker.send(new HitBuilders.AppViewBuilder().build());
 	}
-	
+
 	@Override
 	public void onDestroy() {
 	    super.onDestroy();
@@ -183,5 +244,6 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	    }   
 	}
 
-	
+
 }
+ */
