@@ -24,7 +24,9 @@ public class MyInputAdapter extends InputAdapter{
 		return false;
 	}
 
-	public boolean touchUp (int screenX, int screenY, int pointer, int button) {
+	public boolean touchUp (int X, int Y, int pointer, int button) {
+		touchDownX = X;
+		touchDownY = Y;
 		return false;
 	}
 
@@ -67,10 +69,14 @@ public class MyInputAdapter extends InputAdapter{
 			MyInput.setKey(MyInput.RIGHT, true);
 			break;
 		case Keys.SPACE:
+		case Keys.UP:
 			MyInput.setKey(MyInput.SPACE, true);
 			break;
 		case Keys.DOWN:
 			MyInput.setKey(MyInput.DOWN, true);
+			break;
+		case Keys.BACK:
+			MyInput.setKey(MyInput.BACK, true);
 			break;
 		}
 		return true;
@@ -87,10 +93,14 @@ public class MyInputAdapter extends InputAdapter{
 			MyInput.setKey(MyInput.RIGHT, false);
 			break;
 		case Keys.SPACE:
+		case Keys.UP:
 			MyInput.setKey(MyInput.SPACE, false);
 			break;
 		case Keys.DOWN:
 			MyInput.setKey(MyInput.DOWN, false);
+			break;
+		case Keys.BACK:
+			MyInput.setKey(MyInput.BACK, false);
 			break;
 		}
 		return true;

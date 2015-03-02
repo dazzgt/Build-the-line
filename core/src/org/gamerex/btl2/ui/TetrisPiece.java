@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+import org.gamerex.btl2.states.GSM;
 
 public class TetrisPiece{
 
@@ -28,14 +27,14 @@ public class TetrisPiece{
 	public int brdW = 12;
 	public int brdH = 18;
 
-	public Integer Score=0;
+	//public Integer Score=0;
 
-	Sound soundDown;
-	Sound soundLine;
-
+	//Sound soundDown;
+	//Sound soundLine;
+	GSM gsm;
 	public TetrisPiece(){
 		board = new int[brdW][brdH+5]; 
-
+		
 		StatesX = new HashMap<Integer, int[][]>();
 		StatesX.put(0, new int[][]{{-1,0,-1}});//O
 		StatesX.put(1, new int[][]{{0,0,0},{1,-1,-2}});//I
@@ -55,13 +54,16 @@ public class TetrisPiece{
 		StatesY.put(6, new int[][]{{0,-1,0},{1,-1,0},{0,1,0},{0,1,-1}});//T	
 
 		typeNext = rand.nextInt(7);
-		soundDown = Gdx.audio.newSound(Gdx.files.internal("down.wav"));
-		soundLine = Gdx.audio.newSound(Gdx.files.internal("slize.wav"));
+		//soundDown = Gdx.audio.newSound(Gdx.files.internal("down.ogg"));
+		//soundLine = Gdx.audio.newSound(Gdx.files.internal("slize.mp3"));
+		
+		gsm = GSM.instance;
+		
 	}
 	public void NewGame()
 	{
 		board = new int[brdW][brdH+7]; 
-		Score = 0;
+		gsm.Score = 0;
 		lines = 5;
 		type = rand.nextInt(7);
 		typeNext = rand.nextInt(7);
@@ -160,14 +162,18 @@ public class TetrisPiece{
 
 			cut=checkBoard();
 			lines+=cut;
+			if(lines>=50)
+				gsm.Speed =10;
+			else
+				gsm.Speed = lines/5;
 			if(cut>0)
 			{
 				for(;cut>0;cut--)
-					Score+=(int)((10+5*(cut-1))+(10+5*(cut-1))*(0.1*(lines/5)-0.1));
+					gsm.Score+=(int)((10+5*(cut-1))+(10+5*(cut-1))*(0.1*(lines/5)-0.1));
 				//soundLine.play();
 			}
-			//else
-				//soundDown.play();
+			else
+				;//soundDown.play();
 			
 			beginPath();
 		}

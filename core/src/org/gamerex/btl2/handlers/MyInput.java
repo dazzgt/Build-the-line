@@ -9,11 +9,12 @@ public class MyInput {
 	public static Vector2 tap;
 	private static boolean isTap;
 	
-	public static final int NUM_KEYS = 4;
+	public static final int NUM_KEYS = 5;
 	public static final int SPACE = 0;
 	public static final int LEFT = 1;
 	public static final int RIGHT = 2;
 	public static final int DOWN = 3;
+	public static final int BACK = 4;
 	
 	static {
 		keys = new boolean[NUM_KEYS];

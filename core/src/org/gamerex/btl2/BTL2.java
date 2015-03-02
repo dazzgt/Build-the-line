@@ -41,6 +41,7 @@ public class BTL2 extends ApplicationAdapter{
 		im.addProcessor(new MyInputAdapter());
 		im.addProcessor(new GestureDetector(new MyGestureAdapter()));
 		Gdx.input.setInputProcessor(im);
+		Gdx.input.setCatchBackKey(true);
 	}
 
 	public void render() {

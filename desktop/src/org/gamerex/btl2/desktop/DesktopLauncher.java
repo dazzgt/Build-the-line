@@ -15,6 +15,9 @@ public class DesktopLauncher{
 		new LwjglApplication(new BTL2(new ActionResolver() {
 			public void showInterstital() {}
 			public void setTrackerScreenName(String path) {}
+			public String getStringResourceByName(String aString) {
+				return aString;
+			}
 		}), cfg);
 	}
 

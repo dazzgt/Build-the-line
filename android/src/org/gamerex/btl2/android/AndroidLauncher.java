@@ -3,7 +3,15 @@ package org.gamerex.btl2.android;
 import org.gamerex.btl2.BTL2;
 import org.gamerex.btl2.states.ActionResolver;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -16,7 +24,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	//ADS
 	private static final String AD_UNIT_ID_INTERSTITIAL = "ca-app-pub-6049553525908152/3441613621";
 	private InterstitialAd interstitialAd;
-	
+
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
@@ -38,7 +46,6 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 				interstitialAd.loadAd(interstitialRequest);
 			}
 		});
-		
 	}
 
 	public void showInterstital() {
@@ -57,6 +64,11 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	}
 	public void setTrackerScreenName(String path) {}
 
+	public String getStringResourceByName(String aString) {
+		String packageName = getPackageName();
+		int resId = getResources().getIdentifier(aString, "string", packageName);
+		return getString(resId);
+	}
 }
 
 /*package org.gamerex.btl2.android;

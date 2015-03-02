@@ -13,15 +13,19 @@ public class GSM {
 	public int scH;
 	private Stack<State> states;
 	private State bg;
-	ActionResolver actionResolver;
+	public int Speed = 1;
+	public int Score = 0;
+	public ActionResolver actionResolver;
+	public static GSM instance;
 	
 	public GSM(ActionResolver actionResolver){
 		this.actionResolver = actionResolver;
+		instance=this;
 		states = new Stack<State>();
 		scW = Gdx.graphics.getWidth();
 		scH = Gdx.graphics.getHeight();
 		bg = new Background(this);
-		push(new GameState(this));
+		push(new MainMenu(this));
 		
 	}
 	
@@ -44,5 +48,6 @@ public class GSM {
 	public void render(SpriteBatch sb){
 		bg.render(sb);
 		states.peek().render(sb);
+		sb.setColor(1,1,1,1);
 	}
 }

@@ -36,7 +36,7 @@ public class GameState extends State{
 		scW = Gdx.graphics.getWidth();
 		scH = Gdx.graphics.getHeight();	
 		pbSize = scH/10;
-		pauseBounds = new Rectangle((scW-pbSize)/2, pbSize/2, pbSize, pbSize);
+		pauseBounds = new Rectangle((scW-pbSize)/2, (float) (scH-pbSize*1.5), pbSize, pbSize);
 		size = (int) (scW/tetris.brdW);
 		countdown = (float)(0.1*(11-(int)(tetris.lines/5)));
 		
@@ -49,7 +49,7 @@ public class GameState extends State{
 			tetris.move(-1);
 		if(MyInput.isPressed(MyInput.RIGHT))
 			tetris.move(1);
-		if(MyInput.isDown(MyInput.DOWN))
+		if(MyInput.isPressed(MyInput.DOWN))
 			tetris.moveY(-1);
 		if(MyInput.isPressed(MyInput.SPACE))
 			tetris.rotate();
@@ -87,9 +87,9 @@ public class GameState extends State{
 		sb.draw(cell,size, scH-size,size/sd,size/sd);
 		for(int i=0;i<3;i++)
 			sb.draw(cell,size +tetris.StatesX.get(tetris.typeNext)[0][i]*(size/sd), scH-size +tetris.StatesY.get(tetris.typeNext)[0][i]*(size/sd),size/sd,size/sd);
-		//кнопа паузы
+		//кнопка паузы
 		sb.setColor(1,1,1,0.1f);
-		sb.draw(texPause,pauseBounds.x, scH-pauseBounds.y-pauseBounds.height, pauseBounds.width, pauseBounds.height);
+		sb.draw(texPause,pauseBounds.x, pauseBounds.y, pauseBounds.width, pauseBounds.height);
 		sb.setColor(1,1,1,1f);
 		
 		if(countdown>0)

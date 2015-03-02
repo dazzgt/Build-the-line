@@ -11,7 +11,9 @@ public abstract class State {
 		this.gsm = gsm;
 	}
 	
-	public abstract void handleInput();
+	public void handleInput(){
+		if()
+	}
 	public abstract void update(float dt);
 	public abstract void render(SpriteBatch sb);
 }
