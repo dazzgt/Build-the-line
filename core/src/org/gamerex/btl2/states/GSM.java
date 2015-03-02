@@ -2,6 +2,8 @@ package org.gamerex.btl2.states;
 
 import java.util.Stack;
 
+import org.gamerex.btl2.handlers.MyInput;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -19,6 +21,7 @@ public class GSM {
 		scW = Gdx.graphics.getWidth();
 		scH = Gdx.graphics.getHeight();
 		bg = new Background(this);
+		push(new GameState(this));
 		
 	}
 	
@@ -35,6 +38,7 @@ public class GSM {
 	public void update(float dt){
 		bg.update(dt);
 		states.peek().update(dt);
+		MyInput.update();
 	}
 	
 	public void render(SpriteBatch sb){

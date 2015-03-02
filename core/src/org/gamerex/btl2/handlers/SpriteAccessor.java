@@ -1,4 +1,4 @@
-package org.gamerex.btl2;
+package org.gamerex.btl2.handlers;
 
 import aurelienribon.tweenengine.TweenAccessor;
 

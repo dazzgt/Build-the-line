@@ -1,6 +1,6 @@
 package org.gamerex.btl2.states;
 
-import org.gamerex.btl2.SpriteAccessor;
+import org.gamerex.btl2.handlers.SpriteAccessor;
 import org.gamerex.btl2.ui.Cloud;
 
 import aurelienribon.tweenengine.BaseTween;
