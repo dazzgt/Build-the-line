@@ -12,7 +12,7 @@ public abstract class State {
 	}
 	
 	public void handleInput(){
-		if()
+		//if()
 	}
 	public abstract void update(float dt);
 	public abstract void render(SpriteBatch sb);
