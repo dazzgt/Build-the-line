@@ -21,7 +21,7 @@ public class BTL2 extends ApplicationAdapter{
 
 	private GSM gsm;
 	private SpriteBatch sb;
-	private OrthographicCamera cam;	
+	public static OrthographicCamera cam;	
 	ActionResolver actionResolver;
 	InputMultiplexer im;
 

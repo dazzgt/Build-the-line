@@ -20,8 +20,8 @@ public class MenuPause extends State{
 		Color[] colors= new Color[]{Color.RED,new Color(1, 0.6f, 0, 1),Color.YELLOW,Color.GREEN,Color.CYAN,new Color(0, 0.3f, 0.9f, 1),new Color(0.588f, 0, 0.8f, 1)};
 		pause =  new MyString(new Character[]{'P','A','U','S','E'},colors, new int[]{0,1,2,3,4,5,6});
 		size = gsm.scW/35;
-		pause.X=(gsm.scW-size*29)/2;
-		pause.Y=(int) (gsm.scH*0.75);
+		pause.x=(gsm.scW-size*29)/2;
+		pause.y=(int) (gsm.scH*0.75);
 		}
 
 	public void handleInput() {
@@ -40,7 +40,7 @@ public class MenuPause extends State{
 		for (int i=0;i<arr.length;i++){
 			sb.setColor(arr[i].color);
 			for(int j=0;j<arr[i].arr[0].length;j++)
-				sb.draw(tex,(arr[i].arr[0][j]+w)*size+pause.X,arr[i].arr[1][j]*size+pause.Y,size,size);
+				sb.draw(tex,(arr[i].arr[0][j]+w)*size+pause.x,arr[i].arr[1][j]*size+pause.y,size,size);
 			w+=6;
 		}
 	}

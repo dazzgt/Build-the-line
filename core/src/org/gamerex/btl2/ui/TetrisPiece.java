@@ -17,6 +17,7 @@ public class TetrisPiece{
 	public int X;
 	public int Y;
 	public boolean go=false;
+	public boolean blocked = false;
 
 	private int[] statesCount = {1,2,2,2,4,4,4};
 	private int cut=0;
@@ -34,7 +35,7 @@ public class TetrisPiece{
 	GSM gsm;
 	public TetrisPiece(){
 		board = new int[brdW][brdH+5]; 
-		
+
 		StatesX = new HashMap<Integer, int[][]>();
 		StatesX.put(0, new int[][]{{-1,0,-1}});//O
 		StatesX.put(1, new int[][]{{0,0,0},{1,-1,-2}});//I
@@ -56,9 +57,9 @@ public class TetrisPiece{
 		typeNext = rand.nextInt(7);
 		//soundDown = Gdx.audio.newSound(Gdx.files.internal("down.ogg"));
 		//soundLine = Gdx.audio.newSound(Gdx.files.internal("slize.mp3"));
-		
+
 		gsm = GSM.instance;
-		
+
 	}
 	public void NewGame()
 	{
@@ -174,12 +175,13 @@ public class TetrisPiece{
 			}
 			else
 				;//soundDown.play();
-			
-			beginPath();
+			for(int i = 0;i<brdW;i++)
+				if(board[i][brdH]!=0)
+					go = true;
+			if(!go)
+				beginPath();
 		}
-		for(int i = 0;i<brdW;i++)
-			if(board[i][brdH]!=0)
-				go = true;
+
 
 	}
 
