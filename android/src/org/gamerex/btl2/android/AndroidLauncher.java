@@ -3,67 +3,39 @@ package org.gamerex.btl2.android;
 import org.gamerex.btl2.BTL2;
 import org.gamerex.btl2.states.ActionResolver;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
+import com.appodeal.ads.Appodeal;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 
-public class AndroidLauncher extends AndroidApplication implements ActionResolver {
-
-	//ADS
-	private static final String AD_UNIT_ID_INTERSTITIAL = "ca-app-pub-6049553525908152/3441613621";
-	private InterstitialAd interstitialAd;
-
-	public void onCreate(Bundle savedInstanceState){
+public class AndroidLauncher extends AndroidApplication implements ActionResolver{
+	@Override
+	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-		cfg.useAccelerometer = false;
-		cfg.useCompass = false;
-		interstitialAd = new InterstitialAd(this);
-		interstitialAd.setAdUnitId(AD_UNIT_ID_INTERSTITIAL);
-		adsInit();
-		initialize(new BTL2(this), cfg);
+		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		String appKey = "3ef26a6d2cc47d8289566ddabb220919bea44864f09b7b85";
+		Appodeal.initialize(this, appKey);
+		initialize(new BTL2(this), config);
 	}
 
-	private void adsInit() {
-		AdRequest interstitialRequest = new AdRequest.Builder().build();
-		interstitialAd.loadAd(interstitialRequest);
-		interstitialAd.setAdListener(new AdListener() {
-			public void onAdLoaded() {}
-			public void onAdClosed() {
-				AdRequest interstitialRequest = new AdRequest.Builder().build();
-				interstitialAd.loadAd(interstitialRequest);
-			}
-		});
-	}
-
+	@Override
 	public void showInterstital() {
 		try {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					if (interstitialAd.isLoaded()) {
-						interstitialAd.show();
-					}
-					AdRequest interstitialRequest = new AdRequest.Builder().build();
-					interstitialAd.loadAd(interstitialRequest);
+					if(Appodeal.isLoaded())
+						Appodeal.showBanner(AndroidLauncher.this);
 				}
 			});
 		} catch (Exception e) {
 		}
 	}
+
+	@Override
 	public void setTrackerScreenName(String path) {}
 
+	@Override
 	public String getStringResourceByName(String aString) {
 		String packageName = getPackageName();
 		int resId = getResources().getIdentifier(aString, "string", packageName);
