@@ -17,6 +17,7 @@ public abstract class State {
 	public void handleInput(){
 		if(MyInput.isPressed(MyInput.BACK))
 			Gdx.app.exit();
+
 	}
 	public abstract void update(float dt);
 	public abstract void render(SpriteBatch sb);
