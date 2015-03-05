@@ -2,6 +2,7 @@ package org.gamerex.btl2.states;
 
 import org.gamerex.btl2.handlers.SpriteAccessor;
 import org.gamerex.btl2.ui.Cloud;
+import org.gamerex.btl2.ui.MyString;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
@@ -24,6 +25,8 @@ public class Background extends State{
 	private Sprite grassSprite1;
 	private Sprite grassSprite2;
 	private Sprite grassSprite3;
+	MyString score;
+	MyString speed;
 
 	public Background(GSM gsm) {
 		super(gsm);
@@ -32,6 +35,16 @@ public class Background extends State{
 		for (int i =0;i<count;i++){
 			clouds[i] = new Cloud(gsm);
 		}
+		
+		score = new MyString(new Character[]{'S','C','O','R','E',':'}, gsm.colors, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0});		
+		speed = new MyString(new Character[]{'S','P','E','E','D',':'}, gsm.colors, new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0});
+		score.size = (int) ((gsm.scW*0.4)/60);
+		score.y = gsm.scH - score.size*10;
+		score.x = gsm.scW - score.size*63;
+		
+		speed.size = score.size;
+		speed.y = gsm.scH - score.size*20;
+		speed.x = score.x;
 		
 		atlas = new TextureAtlas("data/grass.atlas");
 		
@@ -67,7 +80,17 @@ public class Background extends State{
 		grassSprite3.draw(sb);
 		grassSprite2.draw(sb);
 		grassSprite1.draw(sb);
+		
+		drawMyString(score, sb);
+		drawMyString(speed, sb);
+		drawScore(sb);
 	}
+	
+	public void drawScore(SpriteBatch sb)
+	{
+		
+	}
+	
 	private final TweenCallback windCallback = new TweenCallback() {
 
 		public void onEvent(int type, BaseTween<?> source) {
