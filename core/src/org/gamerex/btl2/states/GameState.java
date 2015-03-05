@@ -56,7 +56,18 @@ public class GameState extends State{
 	}
 
 	public void handleInput() {
+		super.handleInput();
 		tap=MyInput.getTap();
+		if(tap!=null)
+		{
+			if(tetris.go)
+				tetris.NewGame();
+			else
+				if(pauseBounds.contains(tap.x,tap.y))
+					gsm.push(new MenuPause(gsm));			
+				else
+					tetris.rotate();
+		}
 		if(MyInput.isPressed(MyInput.LEFT))
 			tetris.move(-1);
 		if(MyInput.isPressed(MyInput.RIGHT))
@@ -65,19 +76,12 @@ public class GameState extends State{
 			tetris.moveY(-1);
 		if(MyInput.isPressed(MyInput.SPACE))
 			tetris.rotate();
-		if(tap!=null)
-			if(pauseBounds.contains(tap.x,tap.y))
-				gsm.push(new MenuPause(gsm));			
-			else
-				tetris.rotate();
 	}
 
 	public void update(float dt) {
+		handleInput();
 		if(!tetris.go)
-		{
-			handleInput();
 			countdown-=dt;
-		}
 	}
 
 	public void render(SpriteBatch sb) {

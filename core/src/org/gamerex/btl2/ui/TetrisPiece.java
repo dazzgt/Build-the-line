@@ -63,6 +63,7 @@ public class TetrisPiece{
 	}
 	public void NewGame()
 	{
+		go = false;
 		board = new int[brdW][brdH+7]; 
 		gsm.Score = 0;
 		lines = 5;

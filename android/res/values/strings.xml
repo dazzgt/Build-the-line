@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">BTL2</string>
+    <string name="app_name">Build The Line</string>
+
     <integer name="google_play_services_version">6587000</integer>
+
+    <string name="token">ac834e03f2bc4957b2729cc9377676ab</string>
+    <string name="secret">fc83e11291c44f539be271e2f7ceec3d</string>
+
 </resources>

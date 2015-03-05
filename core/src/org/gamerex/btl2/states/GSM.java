@@ -5,6 +5,8 @@ import java.util.Stack;
 import org.gamerex.btl2.handlers.MyInput;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GSM {
@@ -17,18 +19,29 @@ public class GSM {
 	public int Score = 0;
 	public ActionResolver actionResolver;
 	public static GSM instance;
-	
+
+	public Texture cloud;
+	public Texture pixel;
+	public Texture cell;
+	public Color[] colors;
+
 	public GSM(ActionResolver actionResolver){
 		this.actionResolver = actionResolver;
+
+		cloud = new Texture("cloud.png");
+		pixel = new Texture("pixel.png");
+		cell = new Texture("cell.png");
+		colors = new Color[]{Color.RED,new Color(1, 0.6f, 0, 1),Color.YELLOW,Color.GREEN,Color.CYAN,new Color(0, 0.3f, 0.9f, 1),new Color(0.588f, 0, 0.8f, 1)};
+
 		instance=this;
 		states = new Stack<State>();
 		scW = Gdx.graphics.getWidth();
 		scH = Gdx.graphics.getHeight();
 		bg = new Background(this);
 		push(new MainMenu(this));
-		
+
 	}
-	
+
 	public void push(State s){
 		states.push(s);
 	}
@@ -44,10 +57,15 @@ public class GSM {
 		states.peek().update(dt);
 		MyInput.update();
 	}
-	
+
 	public void render(SpriteBatch sb){
 		bg.render(sb);
 		states.peek().render(sb);
 		sb.setColor(1,1,1,1);
+	}
+	public void dispose(){
+		cloud.dispose();;
+		pixel.dispose();;
+		cell.dispose();
 	}
 }
