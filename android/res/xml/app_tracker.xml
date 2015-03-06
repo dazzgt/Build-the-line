@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
  
     <!-- The apps Analytics Tracking Id -->
-    <string name="ga_trackingId">UA-59672028-5</string>
+    <string name="ga_trackingId">UA-59672028-2</string>
  
     <!-- Percentage of events to include in reports -->
     <string name="ga_sampleFrequency">100.0</string>
@@ -16,6 +16,10 @@
     <!-- How long a session exists before giving up -->
     <integer name="ga_sessionTimeout">300</integer>
  
-    <screenName name="org.gamerex.btl2.android.AndroidLauncher">Android Launcher</screenName>
+    <screenName name="org.gamerex.btl2.android.AndroidLauncher">Launcher</screenName>
+    <screenName name="org.gamerex.btl2.states.MenuPause">Menu Pause</screenName>
+    <screenName name="org.gamerex.btl2.states.MainMenu">Main Menu</screenName>
+    <screenName name="org.gamerex.btl2.states.LeaveState">Leave State</screenName>
+    <screenName name="org.gamerex.btl2.states.GameState">Game State</screenName>
  
 </resources>

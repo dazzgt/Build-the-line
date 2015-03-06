@@ -29,6 +29,8 @@ public class GameState extends State{
 
 	public GameState(GSM gsm) {
 		super(gsm);
+		gsm.actionResolver.setTrackerScreenName("org.gamerex.btl2.states.GameState");
+		
 		tetris = new TetrisPiece();
 		if(rainbow)
 			colors = new Color[]{Color.RED,new Color(1, 0.6f, 0, 1),Color.YELLOW,Color.GREEN,Color.CYAN,new Color(0, 0.3f, 0.9f, 1),new Color(0.588f, 0, 0.8f, 1)};
@@ -50,7 +52,7 @@ public class GameState extends State{
 		pbSize = scH/10;
 		pauseBounds = new Rectangle((scW-pbSize)/2, (float) (scH-pbSize*1.5), pbSize, pbSize);
 		size = (int) (scW/tetris.brdW);
-		countdown = (float)(0.1*(11-(int)(tetris.lines/5)));
+		countdown = 1f;
 
 		tetris.beginPath();
 	}
@@ -115,7 +117,7 @@ public class GameState extends State{
 		{
 			tetris.moveY(-1);
 			if(tetris.lines<=50)
-				countdown = (float)(0.1*(11-(int)(tetris.lines/5)));
+				countdown = calcCountdown();
 			else
 				countdown=0.1f;
 		}
@@ -137,8 +139,13 @@ public class GameState extends State{
 				w+=6;
 			}
 		}
-
-
+	}
+	
+	public float calcCountdown(){
+		float res=1;
+		for(int i = 0; i<tetris.lines/5;i++)
+			res-=0.14-0.01*i;
+		return res;
 	}
 
 }

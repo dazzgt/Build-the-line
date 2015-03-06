@@ -11,6 +11,7 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Sine;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -83,13 +84,11 @@ public class Background extends State{
 		
 		drawMyString(score, sb);
 		drawMyString(speed, sb);
-		drawScore(sb);
+		drawDynamicString(drawMyString(score, sb)*score.size +score.x, score.y, score.size, gsm.Score+"", Color.RED, sb);
+		drawDynamicString(drawMyString(speed, sb)*speed.size +speed.x, speed.y, speed.size, gsm.Speed+"", Color.RED, sb);
 	}
 	
-	public void drawScore(SpriteBatch sb)
-	{
-		
-	}
+	
 	
 	private final TweenCallback windCallback = new TweenCallback() {
 

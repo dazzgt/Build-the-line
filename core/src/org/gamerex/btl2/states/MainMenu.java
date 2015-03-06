@@ -14,7 +14,7 @@ public class MainMenu extends State{
 
 	public MainMenu(GSM gsm) {
 		super(gsm);
-		
+		gsm.actionResolver.setTrackerScreenName("org.gamerex.btl2.states.MainMenu");
 		play =  new MyString(new Character[]{'P','L','A','Y'},gsm.colors, new int[]{0,1,2,3,4,5,6});
 		play.size = gsm.scW/35;
 		play.x=(gsm.scW-play.size*23)/2;
