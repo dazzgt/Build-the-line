@@ -117,9 +117,9 @@ public class GameState extends State{
 		{
 			tetris.moveY(-1);
 			if(tetris.lines<=50)
-				countdown = calcCountdown();
+				countdown = calcCountdown(tetris.lines);
 			else
-				countdown=0.1f;
+				countdown=calcCountdown(50);
 		}
 		if(tetris.go)
 		{
@@ -141,10 +141,10 @@ public class GameState extends State{
 		}
 	}
 	
-	public float calcCountdown(){
-		float res=1;
-		for(int i = 0; i<tetris.lines/5;i++)
-			res-=0.14-0.01*i;
+	public float calcCountdown(int lines){
+		float res=1.15f;
+		for(int i = 0; i<lines/5;i++)
+			res-=0.15-0.01*i;
 		return res;
 	}
 

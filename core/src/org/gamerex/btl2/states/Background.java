@@ -81,9 +81,7 @@ public class Background extends State{
 		grassSprite3.draw(sb);
 		grassSprite2.draw(sb);
 		grassSprite1.draw(sb);
-		
-		drawMyString(score, sb);
-		drawMyString(speed, sb);
+
 		drawDynamicString(drawMyString(score, sb)*score.size +score.x, score.y, score.size, gsm.Score+"", Color.RED, sb);
 		drawDynamicString(drawMyString(speed, sb)*speed.size +speed.x, speed.y, speed.size, gsm.Speed+"", Color.RED, sb);
 	}

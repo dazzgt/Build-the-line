@@ -28,10 +28,7 @@ public class GSM {
 	public GSM(ActionResolver actionResolver){
 		this.actionResolver = actionResolver;
 
-		cloud = new Texture("cloud.png");
-		pixel = new Texture("pixel.png");
-		cell = new Texture("cell.png");
-		colors = new Color[]{Color.RED,new Color(1, 0.6f, 0, 1),Color.YELLOW,Color.GREEN,Color.CYAN,new Color(0, 0.3f, 0.9f, 1),new Color(0.588f, 0, 0.8f, 1)};
+		loadTexture();
 
 		instance=this;
 		states = new Stack<State>();
@@ -40,6 +37,13 @@ public class GSM {
 		bg = new Background(this);
 		push(new MainMenu(this));
 
+	}
+
+	public void loadTexture() {
+		cloud = new Texture("cloud.png");
+		pixel = new Texture("pixel.png");
+		cell = new Texture("cell.png");
+		colors = new Color[]{Color.RED,new Color(1, 0.6f, 0, 1),Color.YELLOW,Color.GREEN,Color.CYAN,new Color(0, 0.3f, 0.9f, 1),new Color(0.588f, 0, 0.8f, 1)};
 	}
 
 	public void push(State s){
