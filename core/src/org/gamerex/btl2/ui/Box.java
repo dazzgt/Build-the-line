@@ -15,11 +15,12 @@ public abstract class Box {
 	protected int speed = 10;
 	protected GSM gsm;
 	protected float scale;
-	protected static final Texture cloud = new Texture("cloud.png");
+	protected Texture cloud ;
 	protected static final Random rand = new Random();
 	
 	public Box(GSM gsm){ 
 		this.gsm = gsm; 
+		cloud = new Texture("cloud.png");
 		speed = gsm.scW/20;
 	}
 	

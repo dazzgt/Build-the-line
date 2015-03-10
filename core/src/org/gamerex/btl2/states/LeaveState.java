@@ -38,7 +38,7 @@ public class LeaveState extends State{
 		yes.y = no.y;
 		
 		boundYes = new Rectangle(yes.x-2*yes.size, yes.y-2*yes.size, yes.size*19, yes.size*9);
-		boundNo = new Rectangle(no.x-2*yes.size, no.y-2*yes.size, no.size*13, no.size*9);
+		boundNo = new Rectangle(no.x-4*no.size, no.y-4*no.size, no.size*15, no.size*11);
 	}
 
 	public void handleInput() {

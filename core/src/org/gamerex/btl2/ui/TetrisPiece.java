@@ -17,7 +17,7 @@ public class TetrisPiece{
 	public int X;
 	public int Y;
 	public boolean go=false;
-	public boolean blocked = false;
+	public static boolean blocked = false;
 
 	private int[] statesCount = {1,2,2,2,4,4,4};
 	private int cut=0;
@@ -159,24 +159,25 @@ public class TetrisPiece{
 			Y+=step;
 		else
 		{
+			blocked = true;
 			board[X][Y]=type+1;
 			for(int i =0;i<3;i++)
 				board[X+mX[i]][Y+mY[i]]=type+1;
 
 			cut=checkBoard();
 			lines+=cut;
-			if(lines>=50)
-				gsm.Speed =10;
-			else
-				gsm.Speed = lines/5;
 			if(cut>0)
 			{
 				for(;cut>0;cut--)
-					gsm.Score+=(int)((10+5*(cut-1))+(10+5*(cut-1))*(0.1*(lines/5)-0.1));
+					gsm.Score+=(int)((10+5*(cut-1))+(10+5*(cut-1))*(0.1*gsm.Speed-0.1));
 				//soundLine.play();
 			}
 			else
 				;//soundDown.play();
+			if(lines>=100)
+				gsm.Speed =20;
+			else
+				gsm.Speed = lines/5;
 			for(int i = 0;i<brdW;i++)
 				if(board[i][brdH]!=0)
 					go = true;

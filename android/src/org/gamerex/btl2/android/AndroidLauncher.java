@@ -3,8 +3,8 @@ package org.gamerex.btl2.android;
 import java.util.HashMap;
 
 import org.gamerex.btl2.BTL2;
-import org.gamerex.btl2.R;
 import org.gamerex.btl2.states.ActionResolver;
+import org.gamerex.buildthelines.R;
 
 import android.os.Bundle;
 
@@ -35,9 +35,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	    if (!mTrackers.containsKey(trackerId)) {
 
 	      GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-	      Tracker t = (trackerId == TrackerName.APP_TRACKER) ? analytics.newTracker(R.xml.app_tracker)
-	          : (trackerId == TrackerName.GLOBAL_TRACKER) ? analytics.newTracker(R.xml.global_tracker)
-	              : analytics.newTracker(R.xml.ecommerce_tracker);
+	      Tracker t = analytics.newTracker(R.xml.app_tracker);
 	      mTrackers.put(trackerId, t);
 
 	    }

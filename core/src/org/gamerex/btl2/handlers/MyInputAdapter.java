@@ -1,5 +1,7 @@
 package org.gamerex.btl2.handlers;
 
+import org.gamerex.btl2.ui.TetrisPiece;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
@@ -18,15 +20,17 @@ public class MyInputAdapter extends InputAdapter{
 		size = Gdx.graphics.getWidth()/12;
 	}
 
-	public boolean touchDown (int X, int Y, int pointer, int button) {
+	public boolean touchDown(int X, int Y, int pointer, int button) {
 		touchDownX = X;
 		touchDownY = Y;
+		TetrisPiece.blocked = false;
 		return false;
 	}
 
 	public boolean touchUp (int X, int Y, int pointer, int button) {
 		touchDownX = X;
 		touchDownY = Y;
+		TetrisPiece.blocked = false;
 		return false;
 	}
 
@@ -36,7 +40,7 @@ public class MyInputAdapter extends InputAdapter{
 		angle = (int) ((Math.atan2(touchDownY - touchY , touchDownX - touchX)/Math.PI) * 180);
 		angle = (angle < 0) ? angle + 360 : angle;
 		len = (int) Math.sqrt(Math.pow(touchX-touchDownX,2)+Math.pow(touchY-touchDownY,2));
-
+		if(TetrisPiece.blocked) return false;
 		if((angle>330 || angle<30) && len>size/2)
 		{
 			MyInput.keys[MyInput.LEFT]=true;

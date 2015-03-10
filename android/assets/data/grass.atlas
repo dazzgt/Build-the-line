@@ -5,29 +5,29 @@ filter: Nearest,Nearest
 repeat: none
 grass
   rotate: false
-  xy: 1, 91
+  xy: 1, 29
   size: 300, 28
   orig: 300, 28
   offset: 0, 0
   index: -1
 grass1
   rotate: false
-  xy: 1, 61
-  size: 300, 28
-  orig: 300, 28
+  xy: 1, 1
+  size: 300, 26
+  orig: 300, 26
   offset: 0, 0
   index: -1
 grass2
   rotate: false
-  xy: 1, 31
-  size: 300, 28
-  orig: 300, 28
+  xy: 303, 31
+  size: 300, 26
+  orig: 300, 26
   offset: 0, 0
   index: -1
 grass3
   rotate: false
-  xy: 1, 1
-  size: 300, 28
-  orig: 300, 28
+  xy: 303, 3
+  size: 300, 26
+  orig: 300, 26
   offset: 0, 0
   index: -1

@@ -24,6 +24,7 @@ public class GameState extends State{
 	private TetrisPiece tetris;
 	private Texture cell;
 	private Texture texPause,texBack;
+	private boolean isGOScreen = true;
 
 	private MyString gameOver;
 
@@ -82,8 +83,10 @@ public class GameState extends State{
 
 	public void update(float dt) {
 		handleInput();
-		if(!tetris.go)
+		if(!tetris.go){
 			countdown-=dt;
+			isGOScreen=true;
+		}
 	}
 
 	public void render(SpriteBatch sb) {
@@ -116,13 +119,17 @@ public class GameState extends State{
 		if(countdown<=0)
 		{
 			tetris.moveY(-1);
-			if(tetris.lines<=50)
+			if(tetris.lines<=100)
 				countdown = calcCountdown(tetris.lines);
 			else
-				countdown=calcCountdown(50);
+				countdown=calcCountdown(100);
 		}
 		if(tetris.go)
-		{
+		{		
+			if(isGOScreen){
+				gsm.actionResolver.setTrackerScreenName("org.gamerex.btl2.states.GameOver");
+				isGOScreen = false;
+			}
 			sb.setColor(0,0, 0, 0.6f);
 			sb.draw(texBack, 0, 0, scW, scH);
 			int w=0;
@@ -144,7 +151,7 @@ public class GameState extends State{
 	public float calcCountdown(int lines){
 		float res=1.15f;
 		for(int i = 0; i<lines/5;i++)
-			res-=0.15-0.01*i;
+			res-=(0.10-0.005*i);
 		return res;
 	}
 

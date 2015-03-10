@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.gamerex.btl2"
+    package="org.gamerex.buildthelines"
     android:versionCode="13"
     android:versionName="2.0" >
 
@@ -20,10 +20,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.gms.analytics.globalConfigResource"
-            android:resource="@xml/global_tracker" />
-
 
         <activity
             android:name="org.gamerex.btl2.android.AndroidLauncher"
