@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.gamerex.buildthelines"
-    android:versionCode="13"
-    android:versionName="2.0" >
+    android:versionCode="16"
+    android:versionName="2.1" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -21,6 +21,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity android:name="com.purplebrain.adbuddiz.sdk.AdBuddizActivity" 
+               android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name="org.gamerex.btl2.android.AndroidLauncher"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
@@ -33,6 +35,8 @@
             </intent-filter>
         </activity>
 
+        
+        
     </application>
 
 </manifest>

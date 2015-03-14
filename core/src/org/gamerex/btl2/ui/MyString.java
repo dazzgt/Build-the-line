@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 
 public class MyString {
 
-	public int x,y,size;
+	public float x,y,size;
 	private MyChar[] arr;
 	public MyString(Character[] s,Color[] c,int[] j){
 		arr = new MyChar[s.length];

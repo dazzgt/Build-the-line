@@ -80,6 +80,7 @@ public class MyInputAdapter extends InputAdapter{
 			MyInput.setKey(MyInput.DOWN, true);
 			break;
 		case Keys.BACK:
+		case Keys.ESCAPE:
 			MyInput.setKey(MyInput.BACK, true);
 			break;
 		}
@@ -104,6 +105,7 @@ public class MyInputAdapter extends InputAdapter{
 			MyInput.setKey(MyInput.DOWN, false);
 			break;
 		case Keys.BACK:
+		case Keys.ESCAPE:
 			MyInput.setKey(MyInput.BACK, false);
 			break;
 		}

@@ -15,9 +15,10 @@ public class GSM {
 	public int scH;
 	private Stack<State> states;
 	private State bg;
-	public int Speed = 1;
+	public int Speed;
 	public int Score = 0;
-	public ActionResolver actionResolver;
+	public int defSpeed=1;
+	public ActionResolver ar;
 	public static GSM instance;
 
 	public Texture cloud;
@@ -26,16 +27,17 @@ public class GSM {
 	public Color[] colors;
 
 	public GSM(ActionResolver actionResolver){
-		this.actionResolver = actionResolver;
+		this.ar = actionResolver;
 
 		loadTexture();
-
+		defSpeed = actionResolver.getIntSettings("Speed");
+		Speed = defSpeed;
 		instance=this;
 		states = new Stack<State>();
 		scW = Gdx.graphics.getWidth();
 		scH = Gdx.graphics.getHeight();
-		bg = new Background(this);
 		push(new MainMenu(this));
+		bg = new Background(this);
 
 	}
 
@@ -51,6 +53,9 @@ public class GSM {
 	}
 	public void pop(){
 		states.pop();
+	}
+	public State getState(){
+		return states.peek();
 	}
 	public void set(State s){
 		states.pop();

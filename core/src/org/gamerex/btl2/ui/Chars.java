@@ -24,7 +24,7 @@ public class Chars {
 		public static final int[][] latQ = new int[][]{{1,2,3,4,5,6},{1,2,3,4,5,6}};
 		public static final int[][] latR = new int[][]{{0,0,0,0,0,0,0,1,2,3,1,2,3,4,4,2,3,4},{0,1,2,3,4,5,6,6,6,6,3,3,3,4,5,2,1,0}};
 		public static final int[][] latS = new int[][]{{0,1,2,3,4,4,3,2,1,0,0,1,2,3,4},{1,0,0,0,1,2,3,3,3,4,5,6,6,6,5}};
-		public static final int[][] latT = new int[][]{{1,2,3,4,5,6},{1,2,3,4,5,6}};
+		public static final int[][] latT = new int[][]{{0,1,2,3,4,2,2,2,2,2,2},{6,6,6,6,6,5,4,3,2,1,0}};
 		public static final int[][] latU = new int[][]{{0,0,0,0,0,0,1,2,3,4,4,4,4,4,4},{1,2,3,4,5,6,0,0,0,1,2,3,4,5,6}};
 		public static final int[][] latV = new int[][]{{0,0,0,0,0,1,2,3,4,4,4,4,4},{6,5,4,3,2,1,0,1,2,3,4,5,6}};
 		public static final int[][] latW = new int[][]{{1,2,3,4,5,6},{1,2,3,4,5,6}};
@@ -45,6 +45,8 @@ public class Chars {
 		
 		public static final int[][] colon = new int[][]{{2,2},{2,4}};//
 		public static final int[][] qm = new int[][]{{0,0,1,2,3,4,4,3,2,2},{4,5,6,6,6,5,4,3,2,0}};//question mark
+		public static final int[][] plus = new int[][]{{0,1,2,3,4,2,2,2,2},{3,3,3,3,3,1,2,4,5}};
+		public static final int[][] minus = new int[][]{{0,1,2,3,4},{3,3,3,3,3}};
 		public static Map<Character, int[][]> chars =new HashMap<Character, int[][]>();
 		
 		public static MyChar getChar(Character ch){
@@ -96,6 +98,8 @@ public class Chars {
 			chars.put('7',num7);
 			chars.put('8',num8);
 			chars.put('9',num9);
+			chars.put('+',plus);
+			chars.put('-',minus);
 			//chars.put('',);
 		}
 }

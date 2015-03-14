@@ -18,6 +18,11 @@ public class DesktopLauncher{
 			public String getStringResourceByName(String aString) {
 				return aString;
 			}
+			public void bill(String arg) {System.out.println(arg);}
+			public void SaveSettings(String name, String Value) {}
+			public int getIntSettings(String name) {return 16;}
+			public boolean getBoolSettings(String name) {return false;}
+			public boolean getAds(){return false;}
 		}), cfg);
 	}
 

@@ -21,7 +21,7 @@ public class TetrisPiece{
 
 	private int[] statesCount = {1,2,2,2,4,4,4};
 	private int cut=0;
-	public int lines=5;
+	public int lines=0;
 	public Map<Integer,int[][]> StatesX;
 	public Map<Integer,int[][]> StatesY;
 	public int[][] board;
@@ -66,8 +66,9 @@ public class TetrisPiece{
 		go = false;
 		board = new int[brdW][brdH+7]; 
 		gsm.Score = 0;
-		gsm.Speed = 1;
-		lines = 5;
+		gsm.Speed = gsm.defSpeed;
+		lines = 0;
+		beginPath();
 		type = rand.nextInt(7);
 		typeNext = rand.nextInt(7);
 		mX = StatesX.get(type)[0];
@@ -94,34 +95,37 @@ public class TetrisPiece{
 		mY = StatesY.get(type)[rotateState];
 		for(int i=2;i>=0;i--)
 		{
-			if(X+mX[i]<0)
-			{
-				if(X+mX[i]<-1)
+			if(Y+mY[i]>=0){
+				if(X+mX[i]<0)
 				{
-					if(!move(2))
-						rotateState=prev;
+					if(X+mX[i]<-1)
+					{
+						if(!move(2))
+							rotateState=prev;
+					}
+					else
+					{
+						if(!move(1))
+							rotateState=prev;
+					}
 				}
-				else
+				if(X+mX[i]>=brdW)
 				{
-					if(!move(1))
-						rotateState=prev;
+					if(X+mX[i]>brdW)
+					{
+						if(!move(-2))
+							rotateState=prev;
+					}
+					else
+					{
+						if(!move(-1))
+							rotateState=prev;
+					}
 				}
+				if(board[X+mX[i]][Y+mY[i]]!=0)
+					rotateState = prev;
 			}
-			if(X+mX[i]>=brdW)
-			{
-				if(X+mX[i]>brdW)
-				{
-					if(!move(-2))
-						rotateState=prev;
-				}
-				else
-				{
-					if(!move(-1))
-						rotateState=prev;
-				}
-			}
-			if(board[X+mX[i]][Y+mY[i]]!=0)
-				rotateState = prev;
+			else rotateState = prev;
 		}
 		mX = StatesX.get(type)[rotateState];
 		mY = StatesY.get(type)[rotateState];
@@ -174,10 +178,10 @@ public class TetrisPiece{
 			}
 			else
 				;//soundDown.play();
-			if(lines>=100)
-				gsm.Speed =20;
+			if((lines+gsm.defSpeed*5)>=100)
+				gsm.Speed = 20;
 			else
-				gsm.Speed = lines/5;
+				gsm.Speed = lines/5+gsm.defSpeed;
 			for(int i = 0;i<brdW;i++)
 				if(board[i][brdH]!=0)
 					go = true;

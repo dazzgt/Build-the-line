@@ -30,8 +30,8 @@ public class BTL2 extends ApplicationAdapter{
 	}
 	
 	public void create() {
-		Gdx.gl.glClearColor(0f, 0.75f, 1f, 1);
 		gsm = new GSM(actionResolver);
+		Gdx.gl.glClearColor(0f, 0.75f, 1f, 1);
 		sb = new SpriteBatch();
 
 		cam = new OrthographicCamera();

@@ -12,7 +12,7 @@ public class MenuPause extends State{
 
 	public MenuPause(GSM gsm) {
 		super(gsm);
-		gsm.actionResolver.setTrackerScreenName("org.gamerex.btl2.states.MenuPause");
+		gsm.ar.setTrackerScreenName("org.gamerex.btl2.states.MenuPause");
 		pause =  new MyString(new Character[]{'P','A','U','S','E'},gsm.colors, new int[]{0,1,2,3,4,5,6});
 		pause.size = gsm.scW/35;
 		pause.x=(gsm.scW-pause.size*29)/2;

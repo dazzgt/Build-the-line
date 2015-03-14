@@ -20,7 +20,7 @@ public class LeaveState extends State{
 	public LeaveState(GSM gsm) {
 		super(gsm);
 
-		gsm.actionResolver.setTrackerScreenName("org.gamerex.btl2.states.LeaveState");
+		gsm.ar.setTrackerScreenName("org.gamerex.btl2.states.LeaveState");
 		leave =  new MyString(new Character[]{'L','E','A','V','I','N','G','?'},gsm.colors, new int[]{0,1,2,3,4,5,6,1});
 		yes =  new MyString(new Character[]{'Y','E','S'},gsm.colors, new int[]{3,2,1});
 		no =  new MyString(new Character[]{'N','O'},gsm.colors, new int[]{0,4});
