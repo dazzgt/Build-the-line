@@ -11,6 +11,7 @@ import org.gamerex.btl2.android.util.Purchase;
 import org.gamerex.btl2.states.ActionResolver;
 import org.gamerex.buildthelines.R;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,90 +21,97 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.purplebrain.adbuddiz.sdk.AdBuddiz;
-import com.purplebrain.adbuddiz.sdk.AdBuddizDelegate;
-import com.purplebrain.adbuddiz.sdk.AdBuddizError;
-import com.purplebrain.adbuddiz.sdk.AdBuddizLogLevel;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.GameHelper;
+import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
+import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.StartAppSDK;
+import com.startapp.android.publish.splash.SplashConfig;
 
 
-public class AndroidLauncher extends AndroidApplication implements ActionResolver,AdBuddizDelegate{
+public class AndroidLauncher extends AndroidApplication implements ActionResolver,GameHelperListener{
 
-	boolean Ads;
+	private GameHelper gameHelper;
 	private static final String ADS = "Ads";
 	protected static final String SKU_REMOVE_ADS = "remove_ads";
-	SharedPreferences settings;
-	
+	SharedPreferences settings;// = getSharedPreferences("UserInfo", 0);
+	private StartAppAd startAppAd;// = new StartAppAd(this);
+
+
 	public enum TrackerName {
 		APP_TRACKER, // Tracker used only in this app.
 		GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
 		ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
 	}
 	HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
-	
+
 	IabHelper mHelper;
 	IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            if ( purchase == null) return;
-            if (mHelper == null) return;
+		public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+			if ( purchase == null) return;
+			if (mHelper == null) return;
 
-            if (result.isFailure()) {
-                return;
-            }
+			if (result.isFailure()) {
+				return;
+			}
+			Log.d("IAB", "Purchase successful.");
 
-            Log.d("IAB", "Purchase successful.");
+			if (purchase.getSku().equals(SKU_REMOVE_ADS)) {
+				SaveSettings(ADS, "false");
+			}
+		}
 
-            if (purchase.getSku().equals(SKU_REMOVE_ADS)) {
-                Ads = false;
-                SaveSettings(ADS, "false");
-            }
-        }
+	};
+	IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+		public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+			Log.d("IAB", "Query inventory finished.");
+			if (mHelper == null) return;			
+			if (result.isFailure()) {
+				return;
+			}
 
-    };
-    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.d("IAB", "Query inventory finished.");
+			// Do we have the premium upgrade?
+			Purchase removeAdPurchase = inventory.getPurchase(SKU_REMOVE_ADS);
+			if(removeAdPurchase != null)
+				setAds(false);
+		}
+	};
 
-            // Have we been disposed of in the meantime? If so, quit.
-            if (mHelper == null) return;
 
-            // Is it a failure?
-            if (result.isFailure()) {
-                // handle failure here
-                return;
-            }
 
-            // Do we have the premium upgrade?
-            Purchase removeAdPurchase = inventory.getPurchase(SKU_REMOVE_ADS);
-            Ads = (removeAdPurchase != null);
-        }
-    };
+
+
+
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		settings = getSharedPreferences("UserInfo", 0);
-		Ads = settings.getBoolean(ADS, true);
-		
+		startAppAd = new StartAppAd(this);
+		StartAppSDK.init(this, "102224766", "202671335", true);
+		//if(getAds()){
+			StartAppAd.showSplash(this, savedInstanceState, 
+					new SplashConfig()
+			.setTheme(SplashConfig.Theme.OCEAN)
+			.setAppName("Build The Lines")  
+			.setLogo(R.drawable.ic_launcher)   // resource ID
+			.setOrientation(SplashConfig.Orientation.PORTRAIT));
+		//}
+
+			settings = getSharedPreferences("UserInfo", 0);
 		String base64EncodedPublicKey = Base64.encode(String.valueOf(new java.util.Random().nextInt()*12134.7389457).getBytes());
 
-	    // compute your public key and store it in base64EncodedPublicKey
-	    mHelper = new IabHelper(this, base64EncodedPublicKey);
+		// compute your public key and store it in base64EncodedPublicKey
+		mHelper = new IabHelper(this, base64EncodedPublicKey);
 
-	    mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-	           public void onIabSetupFinished(IabResult result) {
-	              if (!result.isSuccess()) {
-	                 Log.d("IAB", "Problem setting up In-app Billing: " + result);
-	              }            
-	              Log.d("IAB", "Billing Success: " + result);
-	           }
-	        });
-		
+		mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+			public void onIabSetupFinished(IabResult result) {
+				if (!result.isSuccess()) {
+					Log.d("IAB", "Problem setting up In-app Billing: " + result);
+				}            
+				Log.d("IAB", "Billing Success: " + result);
+			}
+		});
+
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new BTL2(this), config);
-
-		//AdBuddiz.setPublisherKey("TEST_PUBLISHER_KEY");
-		AdBuddiz.setPublisherKey("1c45ffae-805e-48fd-ae0c-f77237d2f394");
-		AdBuddiz.setLogLevel(AdBuddizLogLevel.Info);
-		AdBuddiz.cacheAds(this);
 	}
 	synchronized Tracker getTracker(TrackerName trackerId) {
 		if (!mTrackers.containsKey(trackerId)) {
@@ -119,20 +127,20 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		try {
 			runOnUiThread(new Runnable() {
 				public void run() {
-					if (AdBuddiz.isReadyToShowAd(AndroidLauncher.this)&&Ads) 
-						AdBuddiz.showAd(AndroidLauncher.this);
+					startAppAd.showAd(); // show the ad
+					startAppAd.loadAd();
 				}
 			});
 		} catch (Exception e) {
 		}
 	}
-	public boolean getAds(){return Ads;}
+
 	public void bill(String arg) {
 		mHelper.launchPurchaseFlow(this, SKU_REMOVE_ADS, 10001,
-			     mPurchaseFinishedListener, "HANDLE_PAYLOADS");
+				mPurchaseFinishedListener, "HANDLE_PAYLOADS");
 	}
 	public void SaveSettings(String name,String Value){
-	    SharedPreferences.Editor editor = settings.edit();
+		SharedPreferences.Editor editor = settings.edit();
 		if(name==ADS)
 			editor.putBoolean(ADS, Value=="true");
 		if(name=="Speed")
@@ -140,7 +148,8 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		editor.commit();		
 	}
 	public int getIntSettings(String name){
-		return settings.getInt(name, 1);
+		int i = settings.getInt(name, 1);
+		return i;
 	}
 	public boolean getBoolSettings(String name){
 		return settings.getBoolean(name, true);
@@ -160,60 +169,84 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 	//Billing
 	public void onDestroy() {
-		   super.onDestroy();
-		   if (mHelper != null) mHelper.dispose();
-		   mHelper = null;
-		}
-	
-	//AdBuddiz
+		super.onDestroy();
+		if (mHelper != null) mHelper.dispose();
+		mHelper = null;
+	}
+
 	public void onStart(){
 		super.onStart();
+		gameHelper.onStart(this);
 		GoogleAnalytics.getInstance(this).reportActivityStart(this);
 	}
 	public void onStop(){
 		super.onStop();
+		gameHelper.onStop();
 		GoogleAnalytics.getInstance(this).reportActivityStop(this);
 	}
+	public void setAds(boolean ads){
+		SaveSettings(ADS, "false");
+	}
+	public boolean getAds(){return getBoolSettings(ADS);}
+	@Override
+	public void onActivityResult(int request, int response, Intent data) {
+		super.onActivityResult(request, response, data);
+		gameHelper.onActivityResult(request, response, data);
+	}
+	
+	@Override
+	public boolean getSignedInGPGS() {
+		return gameHelper.isSignedIn();
+	}
 
+	@Override
+	public void loginGPGS() {
+		try {
+			runOnUiThread(new Runnable(){
+				public void run() {
+					gameHelper.beginUserInitiatedSignIn();
+				}
+			});
+		} catch (final Exception ex) {
+		}
+	}
 
-	public void didCacheAd() {
-		Tracker t = getTracker(TrackerName.APP_TRACKER);
-		t.send(new HitBuilders.AppViewBuilder()
-        .setCustomDimension(2, "didCacheAd")
-        .build()
-    );
+	@Override
+	public void submitScoreGPGS(int score) {
+		Games.Leaderboards.submitScore(gameHelper.getApiClient(),"CgkIz_Ke9J0cEAIQAA", score);
 	}
 	
-	public void didClick() {
-		Tracker t = getTracker(TrackerName.APP_TRACKER);
-		t.send(new HitBuilders.AppViewBuilder()
-        .setCustomDimension(4, "didClick")
-        .build()
-    );
+	@Override
+	public void unlockAchievementGPGS(String achievementId) {
+	  Games.Achievements.unlock(gameHelper.getApiClient(), achievementId);
 	}
 	
-	public void didFailToShowAd(AdBuddizError arg0) {
-		Tracker t = getTracker(TrackerName.APP_TRACKER);
-		t.send(new HitBuilders.AppViewBuilder()
-        .setCustomDimension(3, "didFailToShowAd:"+arg0.name())
-        .build()
-    );
+	@Override
+	public void getLeaderboardGPGS() {
+	  if (gameHelper.isSignedIn()) {
+	    startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(), "CgkIz_Ke9J0cEAIQAA"), 100);
+	  }
+	  else if (!gameHelper.isConnecting()) {
+	    loginGPGS();
+	  }
+	}
+
+	@Override
+	public void getAchievementsGPGS() {
+	  if (gameHelper.isSignedIn()) {
+	    startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), 101);
+	  }
+	  else if (!gameHelper.isConnecting()) {
+	    loginGPGS();
+	  }
 	}
 	
-	public void didHideAd() {
-		Tracker t = getTracker(TrackerName.APP_TRACKER);
-		t.send(new HitBuilders.AppViewBuilder()
-        .setCustomDimension(5, "didHideAd")
-        .build()
-    );
+	@Override
+	public void onSignInFailed() {
 	}
-	
-	public void didShowAd() {
-		Tracker t = getTracker(TrackerName.APP_TRACKER);
-		t.send(new HitBuilders.AppViewBuilder()
-        .setCustomDimension(1, "didShowAd")
-        .build()
-    );
+
+	@Override
+	public void onSignInSucceeded() {
 	}
-	
+
 }

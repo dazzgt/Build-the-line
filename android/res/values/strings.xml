@@ -7,5 +7,11 @@
 
     <string name="token">ac834e03f2bc4957b2729cc9377676ab</string>
     <string name="secret">fc83e11291c44f539be271e2f7ceec3d</string>
+    <string name="sign_in_failed">Failed to sign in. Please check your network connection and try again.</string>
+    <string name="app_misconfigured">The application is incorrectly configured. Check that the package name and signing certificate match the client ID created in Developer Console. Also, if the application is not yet published, check that the account you are trying to sign in with is listed as a tester account. See logs for more information.</string>
+    <string name="license_failed">License check failed.</string>
+    <string name="unknown_error">Unknown error.</string>
+    <string name="app_id">970101078351</string>
+    <string name="leaderboard_score">CgkIz_Ke9J0cEAIQAA</string>
 
 </resources>
