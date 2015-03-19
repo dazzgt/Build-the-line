@@ -64,7 +64,10 @@ public class SettingsState extends State{
 			}
 		if(gsm.ar.getAds())
 			if(boundAds.contains(tap.x, tap.y))
+			{
+				gsm.ar.setTrackerScreenName("Remove Ads");
 				gsm.ar.bill("Ads");
+			}
 	}
 	public void update(float dt) {
 		handleInput();

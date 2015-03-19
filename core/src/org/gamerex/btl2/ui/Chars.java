@@ -6,13 +6,13 @@ import java.util.Map;
 
 public class Chars {
 		public static final int[][] latA = new int[][]{{0,0,0,0,0,0,1,2,3,4,4,4,4,4,4,1,2,3},{0,1,2,3,4,5,6,6,6,5,4,3,2,1,0,2,2,2}};
-		public static final int[][] latB = new int[][]{{1,2,3,4,5,6},{1,2,3,4,5,6}};
+		public static final int[][] latB = new int[][]{{0,0,0,0,0,0,0,1,2,3,4,1,2,3,4,1,2,3,4,4,4,4,4},{0,1,2,3,4,5,6,0,0,0,0,3,3,3,3,6,6,6,6,5,4,2,1}};
 		public static final int[][] latC = new int[][]{{0,0,0,0,0,1,2,3,4,4,1,2,3},{1,2,3,4,5,6,6,6,1,5,0,0,0}};
 		public static final int[][] latD = new int[][]{{0,0,0,0,0,0,0,1,2,3,1,2,3,4,4,4,4,4},{0,1,2,3,4,5,6,0,0,0,6,6,6,1,2,3,4,5}};
 		public static final int[][] latE = new int[][]{{0,0,0,0,0,0,0,1,2,3,4,1,2,3,4,1,2,3,4},{0,1,2,3,4,5,6,0,0,0,0,3,3,3,3,6,6,6,6}};
 		public static final int[][] latF = new int[][]{{0,0,0,0,0,0,0,1,2,3,4,1,2,3,4},{0,1,2,3,4,5,6,6,6,6,6,3,3,3,3}};
 		public static final int[][] latG = new int[][]{{3,4,4,4,3,2,1,0,0,0,0,0,1,2,3,4},{3,3,2,1,0,0,0,1,2,3,4,5,6,6,6,5}};
-		public static final int[][] latH = new int[][]{{1,2,3,4,5,6},{1,2,3,4,5,6}};
+		public static final int[][] latH = new int[][]{{0,0,0,0,0,0,0,4,4,4,4,4,4,4,1,2,3},{0,1,2,3,4,5,6,0,1,2,3,4,5,6,3,3,3}};
 		public static final int[][] latI = new int[][]{{0,1,2,3,4,0,1,2,3,4,2,2,2,2,2},{0,0,0,0,0,6,6,6,6,6,1,2,3,4,5}};
 		public static final int[][] latJ = new int[][]{{1,2,3,4,5,6},{1,2,3,4,5,6}};
 		public static final int[][] latK = new int[][]{{0,0,0,0,0,0,0,1,2,3,4,2,3,4},{0,1,2,3,4,5,6,3,4,5,6,2,1,0}};

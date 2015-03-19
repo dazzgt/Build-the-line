@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_id">970101078351</string>
+    <string name="achievement_100">CgkIz_Ke9J0cEAIQAg</string>
+    <string name="achievement_250">CgkIz_Ke9J0cEAIQAw</string>
+    <string name="achievement_500">CgkIz_Ke9J0cEAIQBA</string>
+    <string name="achievement_1000">CgkIz_Ke9J0cEAIQBQ</string>
+    <string name="achievement_2000">CgkIz_Ke9J0cEAIQBg</string>
+    <string name="leaderboard_highscore">CgkIz_Ke9J0cEAIQAA</string>
+
+    <integer name="google_play_services_version">6587000</integer>
+
+</resources>

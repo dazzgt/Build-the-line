@@ -31,7 +31,7 @@ import com.startapp.android.publish.splash.SplashConfig;
 
 public class AndroidLauncher extends AndroidApplication implements ActionResolver,GameHelperListener{
 
-	private GameHelper gameHelper;
+	private GameHelper gameHelper ;
 	private static final String ADS = "Ads";
 	protected static final String SKU_REMOVE_ADS = "remove_ads";
 	SharedPreferences settings;// = getSharedPreferences("UserInfo", 0);
@@ -85,17 +85,17 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		startAppAd = new StartAppAd(this);
+		settings = getSharedPreferences("UserInfo", 0);
 		StartAppSDK.init(this, "102224766", "202671335", true);
 		//if(getAds()){
-			StartAppAd.showSplash(this, savedInstanceState, 
-					new SplashConfig()
-			.setTheme(SplashConfig.Theme.OCEAN)
-			.setAppName("Build The Lines")  
-			.setLogo(R.drawable.ic_launcher)   // resource ID
-			.setOrientation(SplashConfig.Orientation.PORTRAIT));
+		StartAppAd.showSplash(this, savedInstanceState, 
+				new SplashConfig()
+		.setTheme(SplashConfig.Theme.SKY)
+		.setAppName("Build The Lines")  
+		.setLogo(R.drawable.ic_launcher)   // resource ID
+		.setOrientation(SplashConfig.Orientation.PORTRAIT));
 		//}
 
-			settings = getSharedPreferences("UserInfo", 0);
 		String base64EncodedPublicKey = Base64.encode(String.valueOf(new java.util.Random().nextInt()*12134.7389457).getBytes());
 
 		// compute your public key and store it in base64EncodedPublicKey
@@ -103,6 +103,9 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 		mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
 			public void onIabSetupFinished(IabResult result) {
+				if(result==null){
+					Log.d("IAB", "null result: " + result);
+				}
 				if (!result.isSuccess()) {
 					Log.d("IAB", "Problem setting up In-app Billing: " + result);
 				}            
@@ -112,7 +115,13 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new BTL2(this), config);
+		if (gameHelper == null) {
+			gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
+			gameHelper.enableDebugLog(true);
+		}
+		gameHelper.setup(this);
 	}
+
 	synchronized Tracker getTracker(TrackerName trackerId) {
 		if (!mTrackers.containsKey(trackerId)) {
 
@@ -137,7 +146,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 	public void bill(String arg) {
 		mHelper.launchPurchaseFlow(this, SKU_REMOVE_ADS, 10001,
-				mPurchaseFinishedListener, "HANDLE_PAYLOADS");
+				null/*mPurchaseFinishedListener*/, "HANDLE_PAYLOADS");
 	}
 	public void SaveSettings(String name,String Value){
 		SharedPreferences.Editor editor = settings.edit();
@@ -193,7 +202,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		super.onActivityResult(request, response, data);
 		gameHelper.onActivityResult(request, response, data);
 	}
-	
+
 	@Override
 	public boolean getSignedInGPGS() {
 		return gameHelper.isSignedIn();
@@ -213,34 +222,34 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 	@Override
 	public void submitScoreGPGS(int score) {
-		Games.Leaderboards.submitScore(gameHelper.getApiClient(),"CgkIz_Ke9J0cEAIQAA", score);
+		Games.Leaderboards.submitScore(gameHelper.getApiClient(),getStringResourceByName("leaderboard_highscore"), score);
 	}
-	
+
 	@Override
 	public void unlockAchievementGPGS(String achievementId) {
-	  Games.Achievements.unlock(gameHelper.getApiClient(), achievementId);
+		Games.Achievements.unlock(gameHelper.getApiClient(), achievementId);
 	}
-	
+
 	@Override
 	public void getLeaderboardGPGS() {
-	  if (gameHelper.isSignedIn()) {
-	    startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(), "CgkIz_Ke9J0cEAIQAA"), 100);
-	  }
-	  else if (!gameHelper.isConnecting()) {
-	    loginGPGS();
-	  }
+		if (gameHelper.isSignedIn()) {
+			startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(), getStringResourceByName("leaderboard_highscore")), 100);
+		}
+		else if (!gameHelper.isConnecting()) {
+			loginGPGS();
+		}
 	}
 
 	@Override
 	public void getAchievementsGPGS() {
-	  if (gameHelper.isSignedIn()) {
-	    startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), 101);
-	  }
-	  else if (!gameHelper.isConnecting()) {
-	    loginGPGS();
-	  }
+		if (gameHelper.isSignedIn()) {
+			startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), 101);
+		}
+		else if (!gameHelper.isConnecting()) {
+			loginGPGS();
+		}
 	}
-	
+
 	@Override
 	public void onSignInFailed() {
 	}

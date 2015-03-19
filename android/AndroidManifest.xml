@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.gamerex.buildthelines"
-    android:versionCode="17"
+    android:versionCode="18"
     android:versionName="2.2" >
 
     <uses-sdk
@@ -43,6 +43,7 @@
             android:name="com.startapp.android.publish.AppWallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent" />
+            android:screenOrientation="portrait" 
     </application>
 
 </manifest>

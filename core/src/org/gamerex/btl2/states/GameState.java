@@ -29,7 +29,7 @@ public class GameState extends State{
 
 	public GameState(GSM gsm) {
 		super(gsm);
-		gsm.ar.setTrackerScreenName("org.gamerex.btl2.states.GameState");
+		gsm.ar.setTrackerScreenName("Game State");
 		
 		tetris = new TetrisPiece();
 		if(rainbow)
@@ -64,7 +64,7 @@ public class GameState extends State{
 		{
 			if(tetris.go)
 			{
-				gsm.ar.setTrackerScreenName("org.gamerex.btl2.states.GameState");
+				gsm.ar.setTrackerScreenName("Game State");
 				tetris.NewGame();
 			}
 			else
@@ -126,7 +126,15 @@ public class GameState extends State{
 		if(tetris.go)
 		{		
 			if(isGOScreen){
-				gsm.ar.setTrackerScreenName("org.gamerex.btl2.states.GameOver");
+				if (gsm.ar.getSignedInGPGS()) {
+					gsm.ar.submitScoreGPGS(gsm.Score);
+					if (gsm.Score >= 100)  gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_100"));
+					if (gsm.Score >= 250)  gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_250"));
+					if (gsm.Score >= 500)  gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_500"));
+					if (gsm.Score >= 1000) gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_1000"));
+					if (gsm.Score >= 2000) gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_2000"));
+				}
+				gsm.ar.setTrackerScreenName("Game Over");
 				if(gsm.ar.getAds())gsm.ar.showInterstital();
 				isGOScreen = false;
 			}
