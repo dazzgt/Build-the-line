@@ -128,11 +128,18 @@ public class GameState extends State{
 			if(isGOScreen){
 				if (gsm.ar.getSignedInGPGS()) {
 					gsm.ar.submitScoreGPGS(gsm.Score);
-					if (gsm.Score >= 100)  gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_100"));
-					if (gsm.Score >= 250)  gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_250"));
-					if (gsm.Score >= 500)  gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_500"));
-					if (gsm.Score >= 1000) gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_1000"));
-					if (gsm.Score >= 2000) gsm.ar.unlockAchievementGPGS(gsm.ar.getStringResourceByName("achievement_2000"));
+					if (gsm.Score >= 100)  gsm.ar.unlockAchievementGPGS("achievement_100");
+					if (gsm.Score >= 250)  gsm.ar.unlockAchievementGPGS("achievement_250");
+					if (gsm.Score >= 500)  gsm.ar.unlockAchievementGPGS("achievement_500");
+					if (gsm.Score >= 1000) gsm.ar.unlockAchievementGPGS("achievement_1000");
+					if (gsm.Score >= 2000) gsm.ar.unlockAchievementGPGS("achievement_2000");
+					if (gsm.Score >= 3000) gsm.ar.unlockAchievementGPGS("achievement_god");
+					if (gsm.Score >= 100)  gsm.ar.incrementAchievementGPGS("achievement_apprentice");
+					if (gsm.Score >= 500)  gsm.ar.incrementAchievementGPGS("achievement_skilled");
+					if (gsm.Score >= 1000) gsm.ar.incrementAchievementGPGS("achievement_master");
+					if (gsm.Score >= 1500) gsm.ar.incrementAchievementGPGS("achievement_pro_gamer");
+					if (gsm.Score >= 2500) gsm.ar.incrementAchievementGPGS("achievement_chosen_one");
+					gsm.ar.incrementAchievementGPGS("achievement_dedicated");
 				}
 				gsm.ar.setTrackerScreenName("Game Over");
 				if(gsm.ar.getAds())gsm.ar.showInterstital();

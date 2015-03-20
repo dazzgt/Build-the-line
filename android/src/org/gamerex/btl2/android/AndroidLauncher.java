@@ -120,6 +120,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 			gameHelper.enableDebugLog(true);
 		}
 		gameHelper.setup(this);
+		startAppAd.loadAd();
 	}
 
 	synchronized Tracker getTracker(TrackerName trackerId) {
@@ -152,8 +153,10 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 		SharedPreferences.Editor editor = settings.edit();
 		if(name==ADS)
 			editor.putBoolean(ADS, Value=="true");
-		if(name=="Speed")
+		else if(name=="Speed")
 			editor.putInt("Speed", Integer.parseInt(Value));
+		else
+			editor.putInt(name, Integer.parseInt(Value));
 		editor.commit();		
 	}
 	public int getIntSettings(String name){
@@ -227,9 +230,15 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 	@Override
 	public void unlockAchievementGPGS(String achievementId) {
-		Games.Achievements.unlock(gameHelper.getApiClient(), achievementId);
+		Games.Achievements.unlock(gameHelper.getApiClient(), getStringResourceByName(achievementId));
 	}
-
+	@Override
+	public void incrementAchievementGPGS(String achievementId) {
+		int temp = getIntSettings(achievementId);
+		temp++;
+		SaveSettings(achievementId, temp+"");
+	    Games.Achievements.setSteps(gameHelper.getApiClient(), getStringResourceByName(achievementId), temp-1);
+	}
 	@Override
 	public void getLeaderboardGPGS() {
 		if (gameHelper.isSignedIn()) {

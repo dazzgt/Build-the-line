@@ -59,6 +59,11 @@ public class DesktopLauncher{
 				// TODO Auto-generated method stub
 				
 			}
+			@Override
+			public void incrementAchievementGPGS(String achievementId) {
+				// TODO Auto-generated method stub
+				
+			}
 		}), cfg);
 	}
 

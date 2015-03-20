@@ -3,14 +3,19 @@ package org.gamerex.btl2.states;
 import org.gamerex.btl2.handlers.MyInput;
 import org.gamerex.btl2.ui.MyString;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class MainMenu extends State{
 
 
-	private MyString play,settings,achievements,leaderboard;
+	private MyString play,settings;
 	private Rectangle boundPlay,boundSettings,boundsAchievements,boundsLeaderboard;
+	private Texture achievements,leaderboard;
+	int size,y;
 
 	public MainMenu(GSM gsm) {
 		super(gsm);
@@ -26,20 +31,16 @@ public class MainMenu extends State{
 		settings.x = (gsm.scW-settings.size*47)/2;
 		settings.y=gsm.scH*0.5f;
 		
-		achievements = new MyString(new Character[]{'A','C','H','I','E','V','E','M','E','N','T','S'},gsm.colors, new int[]{0,4,3,4,2,1,2,5,3,4,3,5});
-		achievements.size = (play.size*play.length)/achievements.length;
-		achievements.x = play.x;
-		achievements.y=gsm.scH*0.38f;
+		size = (int)(gsm.scW/5);
+		y = (int)(gsm.scH*0.2f);
 		
-		leaderboard = new MyString(new Character[]{'L','E','A','D','E','R','B','O','A','R','D'},gsm.colors, new int[]{1,5,4,5,1,0,1,5,0,1,4,1});
-		leaderboard.size = (play.size*play.length)/leaderboard.length;
-		leaderboard.x = play.x;
-		leaderboard.y=gsm.scH*0.3f;
+		achievements = new Texture(Gdx.files.internal("achievement.png"));
+		leaderboard = new Texture(Gdx.files.internal("leaderboard.png"));
 		
 		boundPlay = new Rectangle(play.x, play.y, play.size*29, play.size*7);
 		boundSettings = new Rectangle(settings.x, settings.y, settings.size*50, settings.size*7);
-		boundsAchievements = new Rectangle(achievements.x, achievements.y, achievements.size*achievements.length, achievements.size*7);
-		boundsLeaderboard = new Rectangle(leaderboard.x, leaderboard.y, leaderboard.size*leaderboard.length, leaderboard.size*7);
+		boundsAchievements = new Rectangle( (int)play.x, y, size, size);
+		boundsLeaderboard = new Rectangle((int)(play.x+play.size*play.length) - size, y, size, size);
 		
 	}
 
@@ -79,7 +80,7 @@ public class MainMenu extends State{
 	public void render(SpriteBatch sb) {
 		drawMyString(play, sb);
 		drawMyString(settings, sb);
-		drawMyString(achievements, sb);
-		drawMyString(leaderboard, sb);
+		sb.draw(achievements,  (int)play.x, y, size, size);
+		sb.draw(leaderboard, (int)(play.x+play.size*play.length) - size, y, size, size);
 	}
 }
