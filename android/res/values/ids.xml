@@ -14,6 +14,7 @@
     <string name="achievement_pro_gamer">CgkIz_Ke9J0cEAIQCw</string>
     <string name="achievement_chosen_one">CgkIz_Ke9J0cEAIQDw</string>
     <string name="achievement_dedicated">CgkIz_Ke9J0cEAIQEA</string>
+    <string name="leaderboard_highscore">CgkIz_Ke9J0cEAIQAA</string>
 
     <integer name="google_play_services_version">6587000</integer>
 

@@ -230,7 +230,10 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 	@Override
 	public void unlockAchievementGPGS(String achievementId) {
+		try{
 		Games.Achievements.unlock(gameHelper.getApiClient(), getStringResourceByName(achievementId));
+		}
+		catch(Exception ex){Log.e("Achievement", ex.getMessage());}
 	}
 	@Override
 	public void incrementAchievementGPGS(String achievementId) {

@@ -14,8 +14,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 
 public class BTL2 extends ApplicationAdapter{
-	public static final int WIDTH = 480/2;
-	public static final int HEIGHT = 800/2;
+	public static final int WIDTH = 480;
+	public static final int HEIGHT = 800;
 	public static final String TITLE = "Build The Line 2";
 
 
