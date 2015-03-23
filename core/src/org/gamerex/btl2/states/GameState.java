@@ -151,10 +151,10 @@ public class GameState extends State{
 		}
 	}
 	
-	public float calcCountdown(int speed){
+	public static float calcCountdown(int speed){
 		float res=1.15f;
 		for(int i = 0; i<speed;i++)
-			res-=(0.10-0.005*i);
+			res-=(0.12-0.0071*i);
 		return res;
 	}
 

@@ -225,22 +225,28 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
 
 	@Override
 	public void submitScoreGPGS(int score) {
-		Games.Leaderboards.submitScore(gameHelper.getApiClient(),getStringResourceByName("leaderboard_highscore"), score);
+		try{
+			Games.Leaderboards.submitScore(gameHelper.getApiClient(),getStringResourceByName("leaderboard_highscore"), score);
+		}
+		catch(Exception ex){Log.e("Leaderboard", ex.getMessage());}
 	}
 
 	@Override
 	public void unlockAchievementGPGS(String achievementId) {
 		try{
-		Games.Achievements.unlock(gameHelper.getApiClient(), getStringResourceByName(achievementId));
+			Games.Achievements.unlock(gameHelper.getApiClient(), getStringResourceByName(achievementId));
 		}
-		catch(Exception ex){Log.e("Achievement", ex.getMessage());}
+		catch(Exception ex){Log.e("Achievement unlock", ex.getMessage());}
 	}
 	@Override
 	public void incrementAchievementGPGS(String achievementId) {
-		int temp = getIntSettings(achievementId);
-		temp++;
-		SaveSettings(achievementId, temp+"");
-	    Games.Achievements.setSteps(gameHelper.getApiClient(), getStringResourceByName(achievementId), temp-1);
+		try{
+			int temp = getIntSettings(achievementId);
+			temp++;
+			SaveSettings(achievementId, temp+"");
+			Games.Achievements.setSteps(gameHelper.getApiClient(), getStringResourceByName(achievementId), temp-1);
+		}
+		catch(Exception ex){Log.e("Achievement increment", ex.getMessage());}
 	}
 	@Override
 	public void getLeaderboardGPGS() {
