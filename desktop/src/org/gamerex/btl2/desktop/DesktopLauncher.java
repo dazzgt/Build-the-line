@@ -35,41 +35,13 @@ public class DesktopLauncher{
 			public int getIntSettings(String name) {return 1;}
 			public boolean getBoolSettings(String name) {return false;}
 			public boolean getAds(){return false;}
-			@Override
-			public boolean getSignedInGPGS() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			@Override
-			public void loginGPGS() {
-				// TODO Auto-generated method stub
-				
-			}
-			@Override
-			public void submitScoreGPGS(int score) {
-				// TODO Auto-generated method stub
-				
-			}
-			@Override
-			public void unlockAchievementGPGS(String achievementId) {
-				// TODO Auto-generated method stub
-				
-			}
-			@Override
-			public void getLeaderboardGPGS() {
-				
-				
-			}
-			@Override
-			public void getAchievementsGPGS() {
-				// TODO Auto-generated method stub
-				
-			}
-			@Override
-			public void incrementAchievementGPGS(String achievementId) {
-				// TODO Auto-generated method stub
-				
-			}
+			public boolean getSignedInGPGS() {return false;}
+			public void loginGPGS() {}
+			public void submitScoreGPGS(int score) {}
+			public void unlockAchievementGPGS(String achievementId) {}
+			public void getLeaderboardGPGS() {}
+			public void getAchievementsGPGS() {}
+			public void incrementAchievementGPGS(String achievementId) {}
 		}), cfg);
 	}
 
